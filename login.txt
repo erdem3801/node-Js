@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -15,7 +15,7 @@
 
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
 </head>
 
 <body class="">
@@ -28,7 +28,7 @@
         </a>
       </div>
       <div class="sidebar-wrapper">
-        <ul class="nav" id="cihazlar">
+        <ul class="nav">
         <!--  <li class="nav-item  ">
             <a class="nav-link" href="./dashboard.html">
               <i class="material-icons">dashboard</i>
@@ -37,7 +37,17 @@
           </li>
         -->
 
-
+        <?php for ($i=0; $i <count($dec[0]->boxRegs) ; $i++) { ?>
+          
+        
+          <li class="nav-item active ">
+            <a class="nav-link">
+              <i class="material-icons" onclick="zaman()">content_paste</i>
+              <p> <?php echo $dec[0]->boxRegs[$i]->alias; ?> </p>
+            </a>
+          </li>
+        <?php } ?>
+     
           
               </p>
             </a>
@@ -81,8 +91,23 @@
                           Adress
                         </th>
                       </thead>
-                      <tbody id="veriler">
+                      <tbody id="message">
 
+                      <?php for ($i=0; $i < count($dec2) ; $i++) { 
+                        # code...
+                      ?>
+                        <tr><td class="name">
+                          <?php  echo $dec2[$i]->id; ?>
+                          </td><td class="name">
+                          <?php  echo $dec2[$i]->name; ?>
+                          </td><td class="name">
+                          <?php  echo $dec2[$i]->boxId; ?>
+                          </td><td class="name">
+                          <?php  echo $dec2[$i]->value; ?>
+                          </td><td class="name">
+                          <?php  echo $dec2[$i]->dataType; ?>
+                          </td></tr>
+                      <?php } ?>
                       </tbody>
                     </table>
                   </div>
@@ -141,60 +166,7 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script>
-    $(document).ready(function(){
-        function getData(){
-            var tokens=getUrlVars()["token"];
-           //var tokens=  $(this).serialize();
 
-      
-           $.ajax({
-                type: 'POST',
-                url: 'login.php',
-                data: { 
-                    "token": tokens,
-                    "veriler":true,
-                    
-                },
-                success: function(data){
-                    $('#veriler').html(data);
-                }
-            });
-        }
-
-        function getdevice(){
-            var tokens=getUrlVars()["token"];
-           //var tokens=  $(this).serialize();
-
-
-           $.ajax({
-                type: 'POST',
-                url: 'login.php',
-                data: { 
-                    "token": tokens,
-                    
-                    "cihazlar":true
-                },
-                success: function(data){
-                    $('#cihazlar').html(data);
-                }
-            });
-        }
-
-        getdevice();
-        getData();
-       setInterval(function () {
-            getData(); 
-        }, 100);  
-        function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
-    });
-</script>
  
 </body>
 
